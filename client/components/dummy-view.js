@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Head from './head'
-import axios from axios
+import axios from 'axios'
 
 const Dummy = () => {
   const listItems = [
