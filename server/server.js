@@ -5,7 +5,6 @@ import bodyParser from 'body-parser'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
-
 import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
@@ -35,6 +34,15 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
+
+server.get('/hello', (req, res) => {
+  res.json({message: "Hello"})
+})
+
+server.get('/test', (req, res) => {
+  res.json({message: 'WORKED'})
+})
+
 server.use('/api/', (req, res) => {
   res.status(404)
   res.end()
@@ -47,6 +55,8 @@ const [htmlStart, htmlEnd] = Html({
 
 server.get('/', (req, res) => {
   const appStream = renderToStaticNodeStream(<Root location={req.url} context={{}} />)
+  console.log(req.url)
+  console.log(htmlStart)
   res.write(htmlStart)
   appStream.pipe(res, { end: false })
   appStream.on('end', () => {
@@ -65,6 +75,10 @@ server.get('/*', (req, res) => {
   })
 })
 
+
+server.get('/test', (req, res) => {
+  res.status(200).json({message: "TEST"})
+})
 const app = server.listen(port)
 
 if (config.isSocketsEnabled) {

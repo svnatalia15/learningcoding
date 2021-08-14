@@ -1,5 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Head from './head'
+import axios from axios
 
 const Dummy = () => {
   const listItems = [
@@ -16,6 +17,15 @@ const Dummy = () => {
   
   const newItem = ''
   const [ item, setItem ] = useState(newItem)
+
+  useEffect(() => {
+    axios
+    .get("/test")
+    .then(result => {
+      console.log(result)
+    })
+    .catch(error => console.log(error));
+  });
   
   return (
     <div>
