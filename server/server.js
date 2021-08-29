@@ -9,6 +9,8 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
+const { readFile, writeFile} = require('fs/promises')
+
 require('colors')
 
 let Root
@@ -39,9 +41,19 @@ server.get('/hello', (req, res) => {
   res.json({message: "Hello"})
 })
 
-server.get('/test', (req, res) => {
-  res.json({message: 'WORKED'})
-})
+server.get('/tasks', async (req, res) => {
+  const result  = await readFile('./tasks.json');
+  res.json(JSON.parse(result))
+}) 
+
+server.post('/tasks', async (req, res) => {
+  const result  = await readFile('./tasks.json')
+  const tasks = JSON.parse(result);  
+  const newTasks = [...tasks, req.body]
+  await writeFile('./tasks.json', JSON.stringify(newTasks))
+  const newRusult  = await readFile('./tasks.json');
+  res.json(JSON.parse(newRusult))
+}) 
 
 server.use('/api/', (req, res) => {
   res.status(404)
@@ -75,10 +87,6 @@ server.get('/*', (req, res) => {
   })
 })
 
-
-server.get('/test', (req, res) => {
-  res.status(200).json({message: "TEST"})
-})
 const app = server.listen(port)
 
 if (config.isSocketsEnabled) {

@@ -3,16 +3,7 @@ import axios from 'axios'
 import Head from './head'
 
 const Dummy = () => {
-  const listItems = [
-    {
-      status: 'Not Done',
-      action: 'Add another component to Tailwind Components'
-    },
-    {
-      status: 'Not Done',
-      action: 'Submit Todo App Component to Tailwind Components'
-    }
-  ]
+  const listItems = []
   const [ items, setItems ] = useState(listItems)
   
   const newItem = ''
@@ -20,12 +11,25 @@ const Dummy = () => {
 
   useEffect(() => {
     axios
-    .get("/test")
+    .get("/tasks")
     .then(result => {
       console.log(result)
     })
     .catch(error => console.log(error));
-  });
+  },[items]);
+
+  add = () => {
+    axios.post('/tasks', {
+      action: item,
+      status: 'Not Done'
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
   
   return (
     <div>
@@ -45,7 +49,7 @@ const Dummy = () => {
               <button
                 type="button"
                 className="hover:bg-indigo-500"
-                onClick={() => item.length ? setItems(arr => [...arr, {status: 'Not Done', action: item}]) : setItems(items)}
+                onClick={this.add}
               >
                 Add
               </button>

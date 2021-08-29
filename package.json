@@ -154,7 +154,7 @@
         "prettier": "^2.3.1",
         "raw-loader": "^4.0.2",
         "react-addons-test-utils": "^15.6.2",
-        "regenerator-runtime": "^0.13.7",
+        "regenerator-runtime": "^0.13.9",
         "rimraf": "3.0.2",
         "sass-loader": "12.1.0",
         "style-loader": "2.0.0",
