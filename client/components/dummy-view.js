@@ -3,7 +3,7 @@ import axios from 'axios'
 import Head from './head'
 
 const Dummy = () => {
-  const listItems = []
+  const listItems = [{"action": "HELLO", "status":"Not Done"}]
   const [ items, setItems ] = useState(listItems)
   
   const newItem = ''
@@ -18,18 +18,18 @@ const Dummy = () => {
     .catch(error => console.log(error));
   },[items]);
 
-  add = () => {
-    axios.post('/tasks', {
-      action: item,
-      status: 'Not Done'
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+  // const add = () => {
+  //   axios.post('/tasks', {
+  //     action: item,
+  //     status: 'Not Done'
+  //   })
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
   
   return (
     <div>
@@ -49,7 +49,6 @@ const Dummy = () => {
               <button
                 type="button"
                 className="hover:bg-indigo-500"
-                onClick={this.add}
               >
                 Add
               </button>
